@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="mobilecompanyType">
+        <xs:sequence>
+            <xs:element name="bean" type="beanType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="tariffsType">
+        <xs:sequence>
+            <xs:element name="bean" type="beanType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="beanType">
+        <xs:sequence>
+            <xs:element name="class" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="propertyType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="value" type="valueType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="valueType">
+        <xs:choice>
+            <xs:element name="integer" type="xs:integer"/>
+            <xs:element type="xs:string" name="string"/>
+            <xs:element name="bean" type="beanType"/>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>
