@@ -3,22 +3,35 @@
 
     <xs:complexType name="mobilecompanyType">
         <xs:sequence>
-            <xs:element name="bean" type="beanType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="company" type="companyType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="tariffs" type="tariffsType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="tariffsType">
+    <xs:complexType name="companyType">
         <xs:sequence>
-            <xs:element name="bean" type="beanType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="beanType">
         <xs:sequence>
-            <xs:element name="class" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="tariffsType">
+        <xs:sequence>
+            <xs:element name="tariff" type="tariffType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="tariffType">
+        <xs:sequence>
             <xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
 
     <xs:complexType name="propertyType">
         <xs:sequence>

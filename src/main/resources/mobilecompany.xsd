@@ -3,5 +3,6 @@
     <xs:include schemaLocation="xsdtypes.xsd"/>
 
     <xs:element name="mobilecompany" type="mobilecompanyType"/>
+    <xs:element name="tariffs" type="tariffsType"/>
 
 </xs:schema>

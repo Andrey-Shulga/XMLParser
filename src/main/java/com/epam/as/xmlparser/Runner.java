@@ -1,8 +1,8 @@
 package com.epam.as.xmlparser;
 
 import java.beans.IntrospectionException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This program parse XML on entity by DOM, SAX, StAX.
@@ -13,8 +13,12 @@ import java.util.Map;
 public class Runner {
     public static void main(String[] args) throws ClassNotFoundException, IntrospectionException {
 
+        String XmlFileName = "mobilecompany";
 
-        Map map = new HashMap();
+        try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }

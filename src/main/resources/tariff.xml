@@ -2,8 +2,7 @@
 <tariffs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="tariff.xsd">
 
-    <bean>
-        <class>com.epam.as.xmlparser.entity.FeeTariff</class>
+    <tariff>
         <property>
             <name>id</name>
             <value>
@@ -34,7 +33,7 @@
                 <integer>500</integer>
             </value>
         </property>
-    </bean>
+    </tariff>
 
 
 </tariffs>

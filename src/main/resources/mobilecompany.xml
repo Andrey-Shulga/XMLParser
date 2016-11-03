@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mobilecompany xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:noNamespaceSchemaLocation="mobilecompany.xsd">
-    <bean>
-        <class>com.epam.as.xmlparser.entity.MobileCompany</class>
+    <company>
         <property>
             <name>name</name>
             <value>
@@ -17,6 +16,41 @@
                 </bean>
             </value>
         </property>
-    </bean>
+    </company>
+
+    <tariffs>
+        <tariff>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 500!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>500</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>50</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffics</name>
+                <value>
+                    <integer>500</integer>
+                </value>
+            </property>
+        </tariff>
+    </tariffs>
 
 </mobilecompany>
