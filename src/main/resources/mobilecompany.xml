@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mobilecompany xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="mobilecompany.xsd">
+    <bean>
+        <class>com.epam.as.xmlparser.entity.MobileCompany</class>
+        <propety>
+            <name>name</name>
+            <value>
+                <string>ECell</string>
+            </value>
+        </propety>
+        <bean>
+            <class>java.util.HashMap</class>
+        </bean>
+    </bean>
+
+    <tariffs>
+        <bean>
+            <class>com.epam.as.xmlparser.entity.FeeTariff</class>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 500!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>500</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>50</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffics</name>
+                <value>
+                    <integer>500</integer>
+                </value>
+            </property>
+        </bean>
+    </tariffs>
+
+</mobilecompany>
