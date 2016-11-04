@@ -40,6 +40,7 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
             Element mobcompany = doc.getDocumentElement();
             NodeList mocompanyTariffs = mobcompany.getElementsByTagName("tariffs");
+
             Element tariffs = (Element) mocompanyTariffs.item(0);
             NodeList tariffList = tariffs.getElementsByTagName("tariff");
 
