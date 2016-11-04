@@ -3,20 +3,8 @@
 
     <xs:complexType name="mobilecompanyType">
         <xs:sequence>
-            <xs:element name="company" type="companyType" minOccurs="0" maxOccurs="unbounded"/>
+
             <xs:element name="tariffs" type="tariffsType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="companyType">
-        <xs:sequence>
-            <xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="beanType">
-        <xs:sequence>
-            <xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -44,7 +32,7 @@
         <xs:choice>
             <xs:element name="integer" type="xs:integer"/>
             <xs:element type="xs:string" name="string"/>
-            <xs:element name="bean" type="beanType"/>
+
         </xs:choice>
     </xs:complexType>
 

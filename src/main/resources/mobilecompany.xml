@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mobilecompany xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:noNamespaceSchemaLocation="mobilecompany.xsd">
-    <company>
-        <property>
-            <name>name</name>
-            <value>
-                <string>ECell</string>
-            </value>
-        </property>
-        <property>
-            <name>tariffmap</name>
-            <value>
-                <bean>
-                    <class>java.util.HashMap</class>
-                </bean>
-            </value>
-        </property>
-    </company>
 
     <tariffs>
         <tariff>
