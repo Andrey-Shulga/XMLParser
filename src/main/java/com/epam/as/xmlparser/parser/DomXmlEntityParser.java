@@ -1,6 +1,8 @@
 package com.epam.as.xmlparser.parser;
 
 import com.epam.as.xmlparser.entity.Tariff;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -27,6 +29,8 @@ import java.util.List;
  */
 public class DomXmlEntityParser implements XmlEntityParser {
 
+    private Logger errLogger = LoggerFactory.getLogger("errorLogger");
+
     @Override
     public List<Tariff> parse(InputStream in, Class<Tariff> entityClass) {
 
@@ -51,8 +55,8 @@ public class DomXmlEntityParser implements XmlEntityParser {
             NodeList tariffList = mobcompany.getFirstChild().getChildNodes();
 
             for (int i = 0; i < tariffList.getLength(); i++) {
-                Class<?> cl = entityClass;
-                Object obj = cl.newInstance();
+
+                Object obj = ((Class<?>) entityClass).newInstance();
 
                 NodeList propertyList = tariffList.item(i).getChildNodes();
 
@@ -65,7 +69,7 @@ public class DomXmlEntityParser implements XmlEntityParser {
                     Element valueElement = (Element) propertyElement.getLastChild();
                     Object value = parseValue(valueElement);
 
-                    BeanInfo beanInfo = Introspector.getBeanInfo(cl);
+                    BeanInfo beanInfo = Introspector.getBeanInfo(entityClass);
                     PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
                     boolean done = false;
                     for (int k = 0; !done && k < descriptors.length; k++) {
@@ -78,10 +82,15 @@ public class DomXmlEntityParser implements XmlEntityParser {
                 list.add((Tariff) obj);
             }
 
-        } catch (ParserConfigurationException | SAXException | IOException | IntrospectionException
+        } catch (IntrospectionException
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            //TODO catch to log
+            errLogger.error("Error with reflection methods occur", e);
+        } catch (IOException ioe) {
+            errLogger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+        } catch (ParserConfigurationException pe) {
+            errLogger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
+        } catch (SAXException saxe) {
+            errLogger.error("Error with parser occur", saxe);
         }
         return list;
     }

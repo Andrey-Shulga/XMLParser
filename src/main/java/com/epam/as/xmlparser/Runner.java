@@ -2,6 +2,8 @@ package com.epam.as.xmlparser;
 
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +19,8 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) {
 
+        Logger errLogger = LoggerFactory.getLogger("errorLogger");
+
         String XmlFileName = "mobilecompany.xml";
         DomXmlEntityParser domParser = new DomXmlEntityParser();
         List<Tariff> tariffList = new ArrayList<>();
@@ -24,8 +28,7 @@ public class Runner {
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
             tariffList = domParser.parse(in, Tariff.class);
         } catch (IOException e) {
-            e.printStackTrace();
-            //TODO catch to log
+            errLogger.error("File: \"{}\" not found!", XmlFileName);
         }
 
         for (Tariff t : tariffList)
