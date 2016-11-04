@@ -35,6 +35,7 @@
                 </value>
             </property>
         </tariff>
+
         <tariff>
             <property>
                 <name>id</name>
@@ -64,6 +65,138 @@
                 <name>includedTraffic</name>
                 <value>
                     <integer>1000</integer>
+                </value>
+            </property>
+        </tariff>
+
+        <tariff>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>3</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 1500!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>1500</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>150</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffic</name>
+                <value>
+                    <integer>1500</integer>
+                </value>
+            </property>
+        </tariff>
+
+        <tariff>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>4</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 2000!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>2000</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>200</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffic</name>
+                <value>
+                    <integer>2000</integer>
+                </value>
+            </property>
+        </tariff>
+
+        <tariff>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>5</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 2500!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>2500</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>250</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffic</name>
+                <value>
+                    <integer>2500</integer>
+                </value>
+            </property>
+        </tariff>
+
+        <tariff>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>6</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 3000!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>3000</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>300</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffic</name>
+                <value>
+                    <integer>3000</integer>
                 </value>
             </property>
         </tariff>
