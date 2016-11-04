@@ -29,9 +29,41 @@
                 </value>
             </property>
             <property>
-                <name>includedTraffics</name>
+                <name>includedTraffic</name>
                 <value>
                     <integer>500</integer>
+                </value>
+            </property>
+        </tariff>
+        <tariff>
+            <property>
+                <name>id</name>
+                <value>
+                    <integer>2</integer>
+                </value>
+            </property>
+            <property>
+                <name>name</name>
+                <value>
+                    <string>All for 1000!</string>
+                </value>
+            </property>
+            <property>
+                <name>fee</name>
+                <value>
+                    <integer>1000</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedMinutes</name>
+                <value>
+                    <integer>100</integer>
+                </value>
+            </property>
+            <property>
+                <name>includedTraffic</name>
+                <value>
+                    <integer>1000</integer>
                 </value>
             </property>
         </tariff>

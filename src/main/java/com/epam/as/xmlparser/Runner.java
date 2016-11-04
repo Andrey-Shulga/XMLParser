@@ -27,7 +27,7 @@ public class Runner {
             e.printStackTrace();
             //TODO catch to log
         }
-        System.out.println(tariffList.size());
+
         for (Tariff t : tariffList)
             System.out.println(t);
 
