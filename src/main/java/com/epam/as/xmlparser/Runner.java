@@ -3,6 +3,7 @@ package com.epam.as.xmlparser;
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
 import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
+import com.epam.as.xmlparser.parser.StaxXmlEntityParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,13 +23,15 @@ public class Runner {
         Logger errLogger = LoggerFactory.getLogger("errorLogger");
 
         String XmlFileName = "mobilecompany.xml";
+        Class<?> entityClass = Tariff.class;
+        List<Object> entityList;
         DomXmlEntityParser domParser = new DomXmlEntityParser();
         SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
-        List<Object> entityList;
+        StaxXmlEntityParser staxParser = new StaxXmlEntityParser();
 
         //Test parsing by DOM
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
-            entityList = (List<Object>) domParser.parse(in, Tariff.class);
+            entityList = (List<Object>) domParser.parse(in, entityClass);
             entityList.clear();
         } catch (IOException e) {
             errLogger.error("File: \"{}\" not found!", XmlFileName, e);
@@ -36,7 +39,15 @@ public class Runner {
 
         //Test parsing by Sax
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
-            entityList = (List<Object>) saxParser.parse(in, Tariff.class);
+            entityList = (List<Object>) saxParser.parse(in, entityClass);
+            entityList.clear();
+        } catch (IOException e) {
+            errLogger.error("File: \"{}\" not found!", XmlFileName, e);
+        }
+
+        //Test parsing by Stax
+        try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
+            entityList = (List<Object>) staxParser.parse(in, entityClass);
             entityList.clear();
         } catch (IOException e) {
             errLogger.error("File: \"{}\" not found!", XmlFileName, e);
