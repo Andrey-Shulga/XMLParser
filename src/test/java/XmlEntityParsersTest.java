@@ -1,6 +1,8 @@
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
 import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -54,31 +56,45 @@ public class XmlEntityParsersTest {
             "</mobilecompany>";
 
     private static final Tariff expectedEntity = new Tariff(1, "All for 500!", 500, 50, 500);
+    private List<?> entityDomList;
+    private List<?> entitySaxList;
 
+    @Before
+    public void setUp() throws Exception {
+
+        DomXmlEntityParser domParser = new DomXmlEntityParser();
+        SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
+        Class<?> testClass = Tariff.class;
+
+        try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
+            entityDomList = domParser.parse(in, testClass);
+        }
+        try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
+            entitySaxList = saxParser.parse(in, testClass);
+        }
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+
+        entityDomList.clear();
+        entitySaxList.clear();
+
+    }
 
     @Test
     public void testDomParser() {
 
-        DomXmlEntityParser parser = new DomXmlEntityParser();
-        List<?> entityList;
-        InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes());
-        Class<?> testClass = Tariff.class;
-        entityList = parser.parse(in, testClass);
+        assertEquals(entityDomList.get(0), expectedEntity);
 
-        assertEquals(entityList.get(0), expectedEntity);
     }
 
 
     @Test
     public void testSaxParser() {
 
-        SaxXmlEntityParser parser = new SaxXmlEntityParser();
-        List<?> entityList2;
-        InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes());
-        Class<?> testClass = Tariff.class;
-        entityList2 = parser.parse(in, testClass);
-
-        assertEquals(entityList2.get(0), expectedEntity);
+        assertEquals(entitySaxList.get(0), expectedEntity);
     }
-    //TODO setUP
+
 }
