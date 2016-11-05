@@ -2,12 +2,12 @@ package com.epam.as.xmlparser;
 
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
+import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,14 +23,23 @@ public class Runner {
 
         String XmlFileName = "mobilecompany.xml";
         DomXmlEntityParser domParser = new DomXmlEntityParser();
-        List<Object> entityList = new ArrayList<>();
+        SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
+        List<Object> entityList;
 
+        //Test parsing by DOM
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
             entityList = (List<Object>) domParser.parse(in, Tariff.class);
+            entityList.clear();
         } catch (IOException e) {
             errLogger.error("File: \"{}\" not found!", XmlFileName, e);
         }
 
-
+        //Test parsing by Sax
+        try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
+            entityList = (List<Object>) saxParser.parse(in, Tariff.class);
+            entityList.clear();
+        } catch (IOException e) {
+            errLogger.error("File: \"{}\" not found!", XmlFileName, e);
+        }
     }
 }

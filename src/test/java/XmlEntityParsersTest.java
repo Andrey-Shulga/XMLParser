@@ -68,16 +68,17 @@ public class XmlEntityParsersTest {
         assertEquals(entityList.get(0), expectedEntity);
     }
 
+
     @Test
     public void testSaxParser() {
 
         SaxXmlEntityParser parser = new SaxXmlEntityParser();
-        List<?> entityList;
+        List<?> entityList2;
         InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes());
         Class<?> testClass = Tariff.class;
-        entityList = parser.parse(in, testClass);
+        entityList2 = parser.parse(in, testClass);
 
-        assertEquals(entityList.get(0), expectedEntity);
+        assertEquals(entityList2.get(0), expectedEntity);
     }
-
+    //TODO setUP
 }

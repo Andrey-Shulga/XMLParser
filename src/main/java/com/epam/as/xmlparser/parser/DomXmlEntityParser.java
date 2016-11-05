@@ -48,7 +48,7 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new ParserErrorHandler());
-            infoLogger.info("Start parsing XML..., use for validation XSD file: {}", XsdFileName);
+            infoLogger.info("Start parsing XML by DOM, use for validation XSD file: {}", XsdFileName);
             infoLogger.info("Try to find entities: {}", entityClass);
             Document doc = builder.parse(in);
 
