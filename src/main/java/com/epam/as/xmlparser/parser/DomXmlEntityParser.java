@@ -1,6 +1,5 @@
 package com.epam.as.xmlparser.parser;
 
-import com.epam.as.xmlparser.entity.Tariff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
@@ -33,9 +32,9 @@ public class DomXmlEntityParser implements XmlEntityParser {
     private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
 
     @Override
-    public List<? extends Object> parse(InputStream in, Class<? extends Object> entityClass) {
+    public List<?> parse(InputStream in, Class<?> entityClass) {
 
-        List<Tariff> list = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
         String XsdFileName = "xsdtypes.xsd";
 
         try {
@@ -59,7 +58,7 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
             for (int i = 0; i < tariffList.getLength(); i++) {
 
-                Object obj = ((Class<?>) entityClass).newInstance();
+                Object obj = entityClass.newInstance();
 
                 NodeList propertyList = tariffList.item(i).getChildNodes();
 
@@ -82,12 +81,12 @@ public class DomXmlEntityParser implements XmlEntityParser {
                         }
                     }
                 }
-                list.add((Tariff) obj);
+                list.add(obj);
             }
             infoLogger.info("Parsing end. Entities found: {}", list.size());
             infoLogger.info("Print results:");
-            for (Tariff e : list)
-                System.out.println(e);
+            for (Object o : list)
+                System.out.println(o);
 
         } catch (IntrospectionException
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {

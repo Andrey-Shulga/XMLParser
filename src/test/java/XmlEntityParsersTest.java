@@ -1,5 +1,6 @@
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
+import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * Test for DOM parser.
  */
-public class ParsersTest {
+public class XmlEntityParsersTest {
     private static final String TEST_STRING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<mobilecompany xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
             "               xsi:noNamespaceSchemaLocation=\"mobilecompany.xsd\">\n" +
@@ -56,9 +57,21 @@ public class ParsersTest {
 
 
     @Test
-    public void testDomParse() {
+    public void testDomParser() {
 
         DomXmlEntityParser parser = new DomXmlEntityParser();
+        List<?> entityList;
+        InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes());
+        Class<?> testClass = Tariff.class;
+        entityList = parser.parse(in, testClass);
+
+        assertEquals(entityList.get(0), expectedEntity);
+    }
+
+    @Test
+    public void testSaxParser() {
+
+        SaxXmlEntityParser parser = new SaxXmlEntityParser();
         List<?> entityList;
         InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes());
         Class<?> testClass = Tariff.class;
