@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class DomXmlEntityParser implements XmlEntityParser {
 
-    private Logger errLogger = LoggerFactory.getLogger("errorLogger");
+    private Logger errorLogger = LoggerFactory.getLogger("errorLogger");
     private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
 
     @Override
@@ -90,13 +90,13 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
         } catch (IntrospectionException
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            errLogger.error("Error with reflection methods occur", e);
+            errorLogger.error("Error with reflection methods occur", e);
         } catch (IOException ioe) {
-            errLogger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+            errorLogger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
         } catch (ParserConfigurationException pe) {
-            errLogger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
+            errorLogger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
         } catch (SAXException saxe) {
-            errLogger.error("Error with parser occur", saxe);
+            errorLogger.error("Error with parser occur", saxe);
         }
         return list;
     }

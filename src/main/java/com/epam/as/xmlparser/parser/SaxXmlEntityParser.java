@@ -30,6 +30,7 @@ import java.util.List;
 public class SaxXmlEntityParser implements XmlEntityParser {
 
     private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
+    private Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     @Override
     public List<?> parse(InputStream in, Class<?> entityClass) {
@@ -65,8 +66,7 @@ public class SaxXmlEntityParser implements XmlEntityParser {
                         try {
                             obj = entityClass.newInstance();
                         } catch (InstantiationException | IllegalAccessException e1) {
-                            e1.printStackTrace();
-                            //TODO catch2log
+                            errorLogger.error("Error occurs with newInstance() method for class {}", entityClass, e1);
                         }
                         break;
                     case "name":
@@ -88,31 +88,24 @@ public class SaxXmlEntityParser implements XmlEntityParser {
             public void endElement(String uri, String localName, String qName) throws SAXException {
 
                 switch (localName) {
-                    case "property": {
-                        BeanInfo beanInfo = null;
+                    case "property":
                         try {
-                            beanInfo = Introspector.getBeanInfo(entityClass);
-                        } catch (IntrospectionException e) {
-                            e.printStackTrace();
-                            //TODO catch2log
-                        }
-                        if (beanInfo != null) {
-                            PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
-                            boolean done = false;
-                            for (int k = 0; !done && k < descriptors.length; k++) {
-                                if (descriptors[k].getName().equals(propertyName)) {
-                                    try {
+                            BeanInfo beanInfo = Introspector.getBeanInfo(entityClass);
+                            if (beanInfo != null) {
+                                PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
+                                boolean done = false;
+                                for (int k = 0; !done && k < descriptors.length; k++) {
+                                    if (descriptors[k].getName().equals(propertyName)) {
                                         descriptors[k].getWriteMethod().invoke(obj, value);
-                                    } catch (IllegalAccessException | InvocationTargetException e) {
-                                        e.printStackTrace();
-                                        //TODO catch2log
+                                        done = true;
                                     }
-                                    done = true;
                                 }
                             }
+                        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+                            errorLogger.error("Errors with reflexion occur!", e);
                         }
-                    }
-                    break;
+                        break;
+
                     case "tariff":
                         list.add(obj);
                         break;
@@ -138,9 +131,12 @@ public class SaxXmlEntityParser implements XmlEntityParser {
             factory.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(input)}));
             SAXParser parser = factory.newSAXParser();
             parser.parse(in, handler);
-        } catch (SAXException | IOException | ParserConfigurationException e) {
-            e.printStackTrace();
-            //TODO catch2log
+        } catch (IOException ioe) {
+            errorLogger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+        } catch (ParserConfigurationException pe) {
+            errorLogger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
+        } catch (SAXException saxe) {
+            errorLogger.error("Error with parser occur", saxe);
         }
 
         return list;
