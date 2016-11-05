@@ -11,7 +11,7 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * Test for DOM parser.
  */
-public class DomParserTest {
+public class ParsersTest {
     private static final String TEST_STRING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<mobilecompany xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
             "               xsi:noNamespaceSchemaLocation=\"mobilecompany.xsd\">\n" +
@@ -56,7 +56,7 @@ public class DomParserTest {
 
 
     @Test
-    public void testParse() {
+    public void testDomParse() {
 
         DomXmlEntityParser parser = new DomXmlEntityParser();
         List<?> entityList;
