@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * An interface for parsing XML
  */
-public interface XmlEntityParser {
+interface XmlEntityParser {
 
-    List<? extends Object> parse(InputStream in, Class<? extends Object> entityClass);
+    List<?> parse(InputStream in, Class<?> entityClass);
 
 }
