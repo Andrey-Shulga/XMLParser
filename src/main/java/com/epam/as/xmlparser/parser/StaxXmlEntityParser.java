@@ -3,6 +3,9 @@ package com.epam.as.xmlparser.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,13 @@ public class StaxXmlEntityParser implements XmlEntityParser {
     public List<?> parse(InputStream in, Class<?> entityClass) {
         List<Object> list = new ArrayList<>();
         String XsdFileName = "xsdtypes.xsd";
+
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        try {
+            XMLStreamReader pareser = factory.createXMLStreamReader(in);
+        } catch (XMLStreamException e) {
+            //TODO catch2log
+        }
 
 
         return list;

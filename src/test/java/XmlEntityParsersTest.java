@@ -1,6 +1,7 @@
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
 import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
+import com.epam.as.xmlparser.parser.StaxXmlEntityParser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,12 +59,14 @@ public class XmlEntityParsersTest {
     private static final Tariff expectedEntity = new Tariff(1, "All for 500!", 500, 50, 500);
     private List<?> entityDomList;
     private List<?> entitySaxList;
+    private List<?> entityStaxList;
 
     @Before
     public void setUp() throws Exception {
 
         DomXmlEntityParser domParser = new DomXmlEntityParser();
         SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
+        StaxXmlEntityParser staxParser = new StaxXmlEntityParser();
         Class<?> testClass = Tariff.class;
 
         try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
@@ -71,6 +74,9 @@ public class XmlEntityParsersTest {
         }
         try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
             entitySaxList = saxParser.parse(in, testClass);
+        }
+        try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
+            entityStaxList = staxParser.parse(in, testClass);
         }
 
     }
@@ -80,6 +86,7 @@ public class XmlEntityParsersTest {
 
         entityDomList.clear();
         entitySaxList.clear();
+        entityStaxList.clear();
 
     }
 
@@ -95,6 +102,12 @@ public class XmlEntityParsersTest {
     public void testSaxParser() {
 
         assertEquals(entitySaxList.get(0), expectedEntity);
+    }
+
+    @Test
+    public void testStaxParser() {
+
+        assertEquals(entityStaxList.get(0), expectedEntity);
     }
 
 }
