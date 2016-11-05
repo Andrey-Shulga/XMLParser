@@ -23,16 +23,14 @@ public class Runner {
 
         String XmlFileName = "mobilecompany.xml";
         DomXmlEntityParser domParser = new DomXmlEntityParser();
-        List<Tariff> tariffList = new ArrayList<>();
+        List<Object> entityList = new ArrayList<>();
 
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
-            tariffList = domParser.parse(in, Tariff.class);
+            entityList = (List<Object>) domParser.parse(in, Tariff.class);
         } catch (IOException e) {
-            errLogger.error("File: \"{}\" not found!", XmlFileName);
+            errLogger.error("File: \"{}\" not found!", XmlFileName, e);
         }
 
-        for (Tariff t : tariffList)
-            System.out.println(t);
 
     }
 }

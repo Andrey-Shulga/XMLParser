@@ -30,9 +30,10 @@ import java.util.List;
 public class DomXmlEntityParser implements XmlEntityParser {
 
     private Logger errLogger = LoggerFactory.getLogger("errorLogger");
+    private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
 
     @Override
-    public List<Tariff> parse(InputStream in, Class<Tariff> entityClass) {
+    public List<? extends Object> parse(InputStream in, Class<? extends Object> entityClass) {
 
         List<Tariff> list = new ArrayList<>();
         String XsdFileName = "xsdtypes.xsd";
@@ -48,6 +49,8 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new ParserErrorHandler());
+            infoLogger.info("Start parsing XML..., use for validation XSD file: {}", XsdFileName);
+            infoLogger.info("Try to find entities: {}", entityClass);
             Document doc = builder.parse(in);
 
             Element mobcompany = doc.getDocumentElement();
@@ -81,6 +84,10 @@ public class DomXmlEntityParser implements XmlEntityParser {
                 }
                 list.add((Tariff) obj);
             }
+            infoLogger.info("Parsing end. Entities found: {}", list.size());
+            infoLogger.info("Print results:");
+            for (Tariff e : list)
+                System.out.println(e);
 
         } catch (IntrospectionException
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {
