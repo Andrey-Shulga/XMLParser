@@ -5,6 +5,7 @@ import com.epam.as.xmlparser.parser.DomXmlEntityParser;
 import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
 import com.epam.as.xmlparser.parser.StaxXmlEntityParser;
 import com.epam.as.xmlparser.util.JDomXmlCreator;
+import com.epam.as.xmlparser.util.JaxbXmlCreator;
 import org.jdom2.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +57,12 @@ public class Runner {
             errLogger.error("File: \"{}\" not found!", XmlFileName, e);
         }
 
-        //Create XML document from entity and write XML to file.
+        //Create XML document from entity by JDOM and write to file.
         Document doc = null;
         if (entityList != null) doc = JDomXmlCreator.createDocument(entityList);
-        if (doc != null) JDomXmlCreator.saveDocToXml("newXMLdoc.xml", doc);
+        if (doc != null) JDomXmlCreator.saveDocToXml("newJdomXml.xml", doc);
+
+        //Create XML document from entity by JAXB and write to file.
+        JaxbXmlCreator.createDocument(entityList, "newJaxbXml.xml");
     }
 }

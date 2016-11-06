@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Create and write entities to XML file.
+ * Create and write entities to XML file by JDOM.
  */
 public class JDomXmlCreator {
 
@@ -38,7 +38,7 @@ public class JDomXmlCreator {
     }
 
     public static Document createDocument(List<?> list) {
-        infoLogger.info("Trying to create XML document model from entity...");
+        infoLogger.info("Trying to create XML document model from entity by JDOM...");
         Element root = new Element("mobilecompany");
         Element tariffs = new Element("tariffs");
         root.addContent(tariffs);

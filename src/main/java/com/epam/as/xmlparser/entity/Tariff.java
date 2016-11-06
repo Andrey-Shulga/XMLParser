@@ -1,8 +1,11 @@
 package com.epam.as.xmlparser.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Class for entities with subscription fee.
  */
+@XmlRootElement
 public class Tariff implements Comparable<Tariff> {
     private String name;
     private int id;
@@ -81,7 +84,7 @@ public class Tariff implements Comparable<Tariff> {
      *
      * @return description about tariff with parameters
      */
-    public String getDescription() {
+    private String getDescription() {
         return "Tariff " + getId() + " \"" + getName() + "\".  This tariff with subscription fee " + getFee() + " per month. Included free " + getIncludedMinutes() + " min. and " +
                 getIncludedTraffic() + " mbs.";
     }
@@ -92,8 +95,7 @@ public class Tariff implements Comparable<Tariff> {
 
         Tariff tariff = (Tariff) o;
 
-        if (id != tariff.id) return false;
-        return name.equals(tariff.name);
+        return id == tariff.id && name.equals(tariff.name);
 
     }
 
