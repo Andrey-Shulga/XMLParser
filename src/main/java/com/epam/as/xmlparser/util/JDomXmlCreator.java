@@ -4,7 +4,10 @@ package com.epam.as.xmlparser.util;
 import com.epam.as.xmlparser.entity.Tariff;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,29 +19,33 @@ import java.util.List;
  */
 public class JDomXmlCreator {
 
-    private static Tariff tariff;
+    private static Logger infoLogger = LoggerFactory.getLogger("infoLogger");
+    private static Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     public static void saveDocToXml(String fileName, Document document) {
 
         XMLOutputter out = new XMLOutputter();
+        out.setFormat(Format.getPrettyFormat());
         try {
+            infoLogger.info("Trying to write XML document to file: {}", fileName);
             out.output(document, new FileOutputStream(fileName));
+            infoLogger.info("Writing XML to file {} succeed.", fileName);
         } catch (IOException e) {
-            //TODO catch2log
+            errorLogger.error("Error when trying to write XML to file: {}", fileName, e);
         }
 
 
     }
 
     public static Document createDocument(List<?> list) {
-
+        infoLogger.info("Trying to create XML document model from entity...");
         Element root = new Element("mobilecompany");
         Element tariffs = new Element("tariffs");
         root.addContent(tariffs);
 
         Iterator<?> entityIterator = list.iterator();
         while (entityIterator.hasNext()) {
-            tariff = (Tariff) entityIterator.next();
+            Tariff tariff = (Tariff) entityIterator.next();
 
             Element tariffElement = new Element("tariff");
             tariffElement.addContent(getPropertyElement("id", "integer", tariff.getId()));
@@ -48,6 +55,7 @@ public class JDomXmlCreator {
             tariffElement.addContent(getPropertyElement("includedTraffic", "integer", tariff.getIncludedTraffic()));
             tariffs.addContent(tariffElement);
         }
+        infoLogger.info("Creating XML document model succeed.");
         return new Document(root);
     }
 
