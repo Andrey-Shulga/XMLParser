@@ -14,7 +14,8 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * This program parse XML on entity by DOM, SAX, StAX.
+ * This program parses XML on entities by DOM, SAX, StAX.
+ * Create XML document from entities and write it to xml file, using JDOM.
  *
  * @author Andrey Shulga
  * @version 1.0   2016-11-03
@@ -27,11 +28,9 @@ public class Runner {
         String XmlFileName = "mobilecompany.xml";
         Class<?> entityClass = Tariff.class;
         List<Object> entityList = null;
-        DomXmlEntityParser domParser = new DomXmlEntityParser();
-        SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
-        StaxXmlEntityParser staxParser = new StaxXmlEntityParser();
 
         //Test parsing by DOM
+        DomXmlEntityParser domParser = new DomXmlEntityParser();
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
             entityList = (List<Object>) domParser.parse(in, entityClass);
             entityList.clear();
@@ -40,6 +39,7 @@ public class Runner {
         }
 
         //Test parsing by Sax
+        SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
             entityList = (List<Object>) saxParser.parse(in, entityClass);
             entityList.clear();
@@ -48,6 +48,7 @@ public class Runner {
         }
 
         //Test parsing by Stax
+        StaxXmlEntityParser staxParser = new StaxXmlEntityParser();
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
             entityList = (List<Object>) staxParser.parse(in, entityClass);
 

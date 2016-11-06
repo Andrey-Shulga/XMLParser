@@ -1,6 +1,6 @@
 XML Parser
 ==========
-This program parse XML by DOM, SAX, StAX.
+This program at first parse XML by DOM, SAX, StAX then create XML from entity by JDOM.
 
-1. Read entity from XML. 
-2. Write entity to XML.
+1. Read entity from XML uses DOM, SAX, StAX parsers. 
+2. Write entity to XML uses JDOM.
