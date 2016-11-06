@@ -4,6 +4,8 @@ import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
 import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
 import com.epam.as.xmlparser.parser.StaxXmlEntityParser;
+import com.epam.as.xmlparser.util.JDomXmlCreator;
+import org.jdom2.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,7 @@ public class Runner {
 
         String XmlFileName = "mobilecompany.xml";
         Class<?> entityClass = Tariff.class;
-        List<Object> entityList;
+        List<Object> entityList = null;
         DomXmlEntityParser domParser = new DomXmlEntityParser();
         SaxXmlEntityParser saxParser = new SaxXmlEntityParser();
         StaxXmlEntityParser staxParser = new StaxXmlEntityParser();
@@ -48,9 +50,14 @@ public class Runner {
         //Test parsing by Stax
         try (InputStream in = Runner.class.getClassLoader().getResourceAsStream(XmlFileName)) {
             entityList = (List<Object>) staxParser.parse(in, entityClass);
-            entityList.clear();
+
         } catch (IOException e) {
             errLogger.error("File: \"{}\" not found!", XmlFileName, e);
         }
+
+        //Create XML document from entity and write XML to file.
+        Document doc = null;
+        if (entityList != null) doc = JDomXmlCreator.createDocument(entityList);
+        if (doc != null) JDomXmlCreator.saveDocToXml("newXMLdoc.xml", doc);
     }
 }
