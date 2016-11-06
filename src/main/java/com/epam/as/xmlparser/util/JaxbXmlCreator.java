@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -26,15 +25,10 @@ public class JaxbXmlCreator {
         Class<?> entityClass = Tariff.class;
         JAXBContext context;
         try {
-            if ((new File(fileName).exists())) new FileOutputStream(fileName);
             infoLogger.info("Trying to create XML document model from entity by JAXB...");
-            for (Object o : list) {
-
-                context = JAXBContext.newInstance(entityClass);
-                Marshaller m = context.createMarshaller();
-                m.marshal(o, new FileOutputStream(fileName, true));
-
-            }
+            context = JAXBContext.newInstance(entityClass);
+            Marshaller m = context.createMarshaller();
+            m.marshal(list.get(0), new FileOutputStream(fileName));
             infoLogger.info("Creating succeed! Written to file {}", fileName);
         } catch (FileNotFoundException e) {
             errorLogger.error("File {} no found", fileName, e);

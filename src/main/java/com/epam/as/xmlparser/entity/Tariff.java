@@ -1,16 +1,25 @@
 package com.epam.as.xmlparser.entity;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 /**
  * Class for entities with subscription fee.
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Tariff", propOrder = {"id", "name", "fee", "includedMinutes", "includedTraffic"})
+
 public class Tariff implements Comparable<Tariff> {
-    private String name;
+
+    @XmlElement(required = true)
     private int id;
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
     private int fee;
+    @XmlElement(required = true)
     private int includedMinutes;
+    @XmlElement(required = true)
     private int includedTraffic;
 
     public Tariff() {
