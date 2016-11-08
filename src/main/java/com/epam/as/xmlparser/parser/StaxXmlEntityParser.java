@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class StaxXmlEntityParser implements XmlEntityParser {
 
-
     private Logger logger = LoggerFactory.getLogger("StaxXmlEntityParser");
 
     @Override

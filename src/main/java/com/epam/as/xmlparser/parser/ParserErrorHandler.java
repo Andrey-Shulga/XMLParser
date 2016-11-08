@@ -15,8 +15,6 @@ class ParserErrorHandler implements ErrorHandler {
     ParserErrorHandler() {
     }
 
-
-
     private String getParseExceptionInfo(SAXParseException spe) {
         String systemId = spe.getSystemId();
         if (systemId == null) {

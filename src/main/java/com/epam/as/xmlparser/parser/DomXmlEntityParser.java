@@ -29,15 +29,15 @@ import java.util.List;
 public class DomXmlEntityParser implements XmlEntityParser {
 
     private Logger logger = LoggerFactory.getLogger("DomXmlEntityParser");
+    private final String XSD_FILE_NAME = "mobilecompanytypes.xsd";
 
     @Override
     public List<?> parse(InputStream in, Class<?> entityClass) {
 
         List<Object> list = new ArrayList<>();
-        String XsdFileName = "mobilecompanytypes.xsd";
 
         try {
-            InputStream input = DomXmlEntityParser.class.getClassLoader().getResourceAsStream(XsdFileName);
+            InputStream input = DomXmlEntityParser.class.getClassLoader().getResourceAsStream(XSD_FILE_NAME);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
 
@@ -47,7 +47,7 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new ParserErrorHandler());
-            logger.debug("Start parsing XML by DOM, use for validation XSD file: {}", XsdFileName);
+            logger.debug("Start parsing XML by DOM, use for validation XSD file: {}", XSD_FILE_NAME);
             logger.debug("Try to find entities: {}", entityClass);
             Document doc = builder.parse(in);
 
@@ -91,7 +91,7 @@ public class DomXmlEntityParser implements XmlEntityParser {
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             logger.error("Error with reflection methods occur", e);
         } catch (IOException ioe) {
-            logger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+            logger.error("Validation XSD file: \"{}\" not found!", XSD_FILE_NAME, ioe);
         } catch (ParserConfigurationException pe) {
             logger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
         } catch (SAXException saxe) {

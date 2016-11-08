@@ -29,14 +29,14 @@ import java.util.List;
  */
 public class SaxXmlEntityParser implements XmlEntityParser {
 
-
     private Logger logger = LoggerFactory.getLogger("SaxXmlEntityParser");
+    private final String XSD_FILE_NAME = "mobilecompanytypes.xsd";
 
     @Override
     public List<?> parse(InputStream in, Class<?> entityClass) {
 
         List<Object> list = new ArrayList<>();
-        String XsdFileName = "mobilecompanytypes.xsd";
+
 
         DefaultHandler handler = new DefaultHandler() {
             private Object obj;
@@ -47,7 +47,7 @@ public class SaxXmlEntityParser implements XmlEntityParser {
 
             @Override
             public void startDocument() throws SAXException {
-                logger.debug("Start parsing XML by SAX, use for validation XSD file: {}", XsdFileName);
+                logger.debug("Start parsing XML by SAX, use for validation XSD file: {}", XSD_FILE_NAME);
                 logger.debug("Try to find entities: {}", entityClass);
             }
 
@@ -126,13 +126,13 @@ public class SaxXmlEntityParser implements XmlEntityParser {
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setNamespaceAware(true);
-        try (InputStream input = SaxXmlEntityParser.class.getClassLoader().getResourceAsStream(XsdFileName)) {
+        try (InputStream input = SaxXmlEntityParser.class.getClassLoader().getResourceAsStream(XSD_FILE_NAME)) {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             factory.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(input)}));
             SAXParser parser = factory.newSAXParser();
             parser.parse(in, handler);
         } catch (IOException ioe) {
-            logger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+            logger.error("Validation XSD file: \"{}\" not found!", XSD_FILE_NAME, ioe);
         } catch (ParserConfigurationException pe) {
             logger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
         } catch (SAXException saxe) {

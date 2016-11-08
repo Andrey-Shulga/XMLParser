@@ -1,6 +1,5 @@
 package com.epam.as.xmlparser.util;
 
-import com.epam.as.xmlparser.entity.Tariff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,26 +8,24 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.List;
 
 /**
  * Create and write entities to XML file by JAXB.
  */
-public class JaxbXmlCreator {
+public class JaxbXmlWriter {
 
 
-    private static Logger logger = LoggerFactory.getLogger("JaxbXmlCreator");
+    private static Logger logger = LoggerFactory.getLogger("JaxbXmlWriter");
 
-    public static void createDocument(List<?> list, String fileName) {
+    public static void createDocument(Object transformClass, String fileName) {
 
-        Object obj;
-        Class<?> entityClass = Tariff.class;
         JAXBContext context;
         try {
             logger.debug("Trying to create XML document model from entity by JAXB...");
-            context = JAXBContext.newInstance(entityClass);
+            context = JAXBContext.newInstance(transformClass.getClass());
             Marshaller m = context.createMarshaller();
-            m.marshal(list.get(0), new FileOutputStream(fileName));
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            m.marshal(transformClass, new FileOutputStream(fileName));
             logger.debug("Creating succeed! Written to file {}", fileName);
         } catch (FileNotFoundException e) {
             logger.error("File {} no found", fileName, e);
