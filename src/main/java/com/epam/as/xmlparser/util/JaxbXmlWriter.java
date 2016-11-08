@@ -26,7 +26,8 @@ public class JaxbXmlWriter {
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             m.marshal(transformClass, new FileOutputStream(fileName));
-            logger.debug("Creating succeed! Written to file {}", fileName);
+            logger.debug("Creating XML model succeed!");
+            logger.debug("Written to file {}", fileName);
         } catch (FileNotFoundException e) {
             logger.error("File {} no found", fileName, e);
         } catch (JAXBException e) {

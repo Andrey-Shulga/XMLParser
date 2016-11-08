@@ -1,13 +1,14 @@
 package com.epam.as.xmlparser.parser;
 
+import com.epam.as.xmlparser.entity.MobileCompany;
+
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * An interface for parsing XML
  */
 interface XmlEntityParser {
 
-    List<?> parse(InputStream in, Class<?> entityClass);
+    <T> MobileCompany parse(InputStream in, Class<?> entityClass);
 
 }

@@ -1,5 +1,6 @@
 package com.epam.as.xmlparser.parser;
 
+import com.epam.as.xmlparser.entity.MobileCompany;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +23,16 @@ import java.util.List;
 public class StaxXmlEntityParser implements XmlEntityParser {
 
     private Logger logger = LoggerFactory.getLogger("StaxXmlEntityParser");
+    private MobileCompany mobileCompany;
+
+
+    public StaxXmlEntityParser() {
+        this.mobileCompany = new MobileCompany();
+    }
 
     @Override
-    public List<?> parse(InputStream in, Class<?> entityClass) {
-        List<Object> list = new ArrayList<>();
+    public <T> MobileCompany parse(InputStream in, Class<?> entityClass) {
+        List<Object> entityList = new ArrayList<>();
         Object obj = null;
         String propertyName = null;
         Object value = null;
@@ -48,10 +55,12 @@ public class StaxXmlEntityParser implements XmlEntityParser {
 
                 switch (event) {
                     case XMLStreamConstants.END_DOCUMENT:
-                        logger.debug("Parsing end. Entities found: {}", list.size());
+                        logger.debug("Parsing end. Entities found: {}", entityList.size());
                         logger.debug("Print results:");
-                        for (Object o : list)
+                        for (Object o : entityList)
                             logger.debug(o.toString());
+                        mobileCompany.setTariffs(entityList);
+                        logger.debug("Aggregator object {} with entities {} create.", mobileCompany.getClass(), entityClass);
                         break;
 
                     case XMLStreamConstants.START_ELEMENT:
@@ -104,7 +113,7 @@ public class StaxXmlEntityParser implements XmlEntityParser {
                                 break;
 
                             case "tariff":
-                                list.add(obj);
+                                entityList.add(obj);
                                 break;
                         }
                         break;
@@ -115,7 +124,7 @@ public class StaxXmlEntityParser implements XmlEntityParser {
         } catch (XMLStreamException e) {
             logger.error("Error with method hasNext() or next() occur!", e);
         }
-        return list;
+        return mobileCompany;
     }
 }
 

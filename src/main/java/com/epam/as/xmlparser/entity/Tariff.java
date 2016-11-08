@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.*;
 /**
  * Class for entities with subscription fee.
  */
-@XmlRootElement
+@XmlRootElement(name = "tariff")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Tariff", propOrder = {"id", "name", "fee", "includedMinutes", "includedTraffic"})
 

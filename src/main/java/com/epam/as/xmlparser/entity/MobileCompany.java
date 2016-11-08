@@ -1,14 +1,14 @@
 package com.epam.as.xmlparser.entity;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Aggregator - Mobile company.
  */
 public class MobileCompany {
     private String name;
-    private Map<Tariff, Integer> tariffs;
-    private int RANDOM_RANGE = 1500000;
+    private List tariffs;
 
 
     public MobileCompany() {
@@ -20,7 +20,7 @@ public class MobileCompany {
      * @param name      the name of Mobile Company
      * @param tariffs the list of tariffs for Mobile Company
      */
-    public MobileCompany(String name, Map<Tariff, Integer> tariffs) {
+    public MobileCompany(String name, List<Object> tariffs) {
         this.name = name;
         this.tariffs = tariffs;
     }
@@ -33,33 +33,12 @@ public class MobileCompany {
         this.name = name;
     }
 
-    public Map<Tariff, Integer> getTariffs() {
-        return tariffs;
+    public List getTariffs() {
+        return new ArrayList<>(tariffs);
     }
 
-    public void setTariffs(Map<Tariff, Integer> tariffs) {
+    public void setTariffs(List tariffs) {
         this.tariffs = tariffs;
     }
 
-    /**
-     * Generate random number of clients for tariff.
-     *
-     * @return random number of clients for tariff
-     */
-    public int getTariffNumberOfClients() {
-        return (int) (Math.random() * RANDOM_RANGE);
-    }
-
-    /**
-     * Get number of customers for all tariff.
-     *
-     * @param tariffMap the list of tariff
-     */
-    public int getLogAllCustomers(Map<Tariff, Integer> tariffMap) {
-        int count = 0;
-
-        for (Map.Entry m : tariffMap.entrySet())
-            count += Integer.parseInt(m.getValue().toString());
-        return count;
-    }
 }

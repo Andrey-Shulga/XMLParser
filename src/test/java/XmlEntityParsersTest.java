@@ -1,3 +1,4 @@
+import com.epam.as.xmlparser.entity.MobileCompany;
 import com.epam.as.xmlparser.entity.Tariff;
 import com.epam.as.xmlparser.parser.DomXmlEntityParser;
 import com.epam.as.xmlparser.parser.SaxXmlEntityParser;
@@ -8,7 +9,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -57,9 +57,8 @@ public class XmlEntityParsersTest {
             "</mobilecompany>";
 
     private static final Tariff expectedEntity = new Tariff(1, "All for 500!", 500, 50, 500);
-    private List<?> entityDomList;
-    private List<?> entitySaxList;
-    private List<?> entityStaxList;
+    private MobileCompany mobileCompany;
+
 
     @Before
     public void setUp() throws Exception {
@@ -70,13 +69,13 @@ public class XmlEntityParsersTest {
         Class<?> testClass = Tariff.class;
 
         try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
-            entityDomList = domParser.parse(in, testClass);
+            mobileCompany = domParser.parse(in, testClass);
         }
         try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
-            entitySaxList = saxParser.parse(in, testClass);
+            mobileCompany = saxParser.parse(in, testClass);
         }
         try (InputStream in = new ByteArrayInputStream(TEST_STRING.getBytes())) {
-            entityStaxList = staxParser.parse(in, testClass);
+            mobileCompany = staxParser.parse(in, testClass);
         }
 
     }
@@ -84,16 +83,15 @@ public class XmlEntityParsersTest {
     @After
     public void tearDown() throws Exception {
 
-        entityDomList.clear();
-        entitySaxList.clear();
-        entityStaxList.clear();
+        mobileCompany.getTariffs().clear();
+
 
     }
 
     @Test
     public void testDomParser() {
 
-        assertEquals(entityDomList.get(0), expectedEntity);
+        assertEquals(mobileCompany.getTariffs().get(0), expectedEntity);
 
     }
 
@@ -101,13 +99,13 @@ public class XmlEntityParsersTest {
     @Test
     public void testSaxParser() {
 
-        assertEquals(entitySaxList.get(0), expectedEntity);
+        assertEquals(mobileCompany.getTariffs().get(0), expectedEntity);
     }
 
     @Test
     public void testStaxParser() {
 
-        assertEquals(entityStaxList.get(0), expectedEntity);
+        assertEquals(mobileCompany.getTariffs().get(0), expectedEntity);
     }
 
 }

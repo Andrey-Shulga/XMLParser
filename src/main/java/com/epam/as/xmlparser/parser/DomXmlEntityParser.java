@@ -1,5 +1,6 @@
 package com.epam.as.xmlparser.parser;
 
+import com.epam.as.xmlparser.entity.MobileCompany;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
@@ -30,11 +31,17 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
     private Logger logger = LoggerFactory.getLogger("DomXmlEntityParser");
     private final String XSD_FILE_NAME = "mobilecompanytypes.xsd";
+    private MobileCompany mobileCompany;
+
+    public DomXmlEntityParser() {
+        this.mobileCompany = new MobileCompany();
+    }
+
 
     @Override
-    public List<?> parse(InputStream in, Class<?> entityClass) {
+    public <T> MobileCompany parse(InputStream in, Class<?> entityClass) {
 
-        List<Object> list = new ArrayList<>();
+        List<Object> entityList = new ArrayList<>();
 
         try {
             InputStream input = DomXmlEntityParser.class.getClassLoader().getResourceAsStream(XSD_FILE_NAME);
@@ -80,11 +87,11 @@ public class DomXmlEntityParser implements XmlEntityParser {
                         }
                     }
                 }
-                list.add(obj);
+                entityList.add(obj);
             }
-            logger.debug("Parsing end. Entities found: {}", list.size());
+            logger.debug("Parsing end. Entities found: {}", entityList.size());
             logger.debug("Print results:");
-            for (Object o : list)
+            for (Object o : entityList)
                 logger.debug(o.toString());
 
         } catch (IntrospectionException
@@ -97,7 +104,9 @@ public class DomXmlEntityParser implements XmlEntityParser {
         } catch (SAXException saxe) {
             logger.error("Error with parser occur", saxe);
         }
-        return list;
+        mobileCompany.setTariffs(entityList);
+        logger.debug("Aggregator object {} with entities {} create.", mobileCompany.getClass(), entityClass);
+        return mobileCompany;
     }
 
     private Object parseValue(Element valueElement) {

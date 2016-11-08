@@ -1,5 +1,6 @@
 package com.epam.as.xmlparser.parser;
 
+import com.epam.as.xmlparser.entity.MobileCompany;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -31,12 +32,17 @@ public class SaxXmlEntityParser implements XmlEntityParser {
 
     private Logger logger = LoggerFactory.getLogger("SaxXmlEntityParser");
     private final String XSD_FILE_NAME = "mobilecompanytypes.xsd";
+    private MobileCompany mobileCompany;
+
+    public SaxXmlEntityParser() {
+        this.mobileCompany = new MobileCompany();
+    }
+
 
     @Override
-    public List<?> parse(InputStream in, Class<?> entityClass) {
+    public <T> MobileCompany parse(InputStream in, Class<?> entityClass) {
 
-        List<Object> list = new ArrayList<>();
-
+        List<Object> entityList = new ArrayList<>();
 
         DefaultHandler handler = new DefaultHandler() {
             private Object obj;
@@ -53,10 +59,12 @@ public class SaxXmlEntityParser implements XmlEntityParser {
 
             @Override
             public void endDocument() throws SAXException {
-                logger.debug("Parsing end. Entities found: {}", list.size());
+                logger.debug("Parsing end. Entities found: {}", entityList.size());
                 logger.debug("Print results:");
-                for (Object o : list)
+                for (Object o : entityList)
                     logger.debug(o.toString());
+                mobileCompany.setTariffs(entityList);
+                logger.debug("Aggregator object {} with entities {} create.", mobileCompany.getClass(), entityClass);
             }
 
             @Override
@@ -107,7 +115,7 @@ public class SaxXmlEntityParser implements XmlEntityParser {
                         break;
 
                     case "tariff":
-                        list.add(obj);
+                        entityList.add(obj);
                         break;
                 }
 
@@ -139,6 +147,6 @@ public class SaxXmlEntityParser implements XmlEntityParser {
             logger.error("Error with parser occur", saxe);
         }
 
-        return list;
+        return mobileCompany;
     }
 }
