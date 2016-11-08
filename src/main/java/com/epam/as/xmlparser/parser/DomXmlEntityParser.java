@@ -28,14 +28,13 @@ import java.util.List;
  */
 public class DomXmlEntityParser implements XmlEntityParser {
 
-    private Logger errorLogger = LoggerFactory.getLogger("errorLogger");
-    private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
+    private Logger logger = LoggerFactory.getLogger("DomXmlEntityParser");
 
     @Override
     public List<?> parse(InputStream in, Class<?> entityClass) {
 
         List<Object> list = new ArrayList<>();
-        String XsdFileName = "xsdtypes.xsd";
+        String XsdFileName = "mobilecompanytypes.xsd";
 
         try {
             InputStream input = DomXmlEntityParser.class.getClassLoader().getResourceAsStream(XsdFileName);
@@ -48,8 +47,8 @@ public class DomXmlEntityParser implements XmlEntityParser {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new ParserErrorHandler());
-            infoLogger.info("Start parsing XML by DOM, use for validation XSD file: {}", XsdFileName);
-            infoLogger.info("Try to find entities: {}", entityClass);
+            logger.debug("Start parsing XML by DOM, use for validation XSD file: {}", XsdFileName);
+            logger.debug("Try to find entities: {}", entityClass);
             Document doc = builder.parse(in);
 
             Element mobcompany = doc.getDocumentElement();
@@ -83,20 +82,20 @@ public class DomXmlEntityParser implements XmlEntityParser {
                 }
                 list.add(obj);
             }
-            infoLogger.info("Parsing end. Entities found: {}", list.size());
-            infoLogger.info("Print results:");
+            logger.debug("Parsing end. Entities found: {}", list.size());
+            logger.debug("Print results:");
             for (Object o : list)
-                System.out.println(o);
+                logger.debug(o.toString());
 
         } catch (IntrospectionException
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            errorLogger.error("Error with reflection methods occur", e);
+            logger.error("Error with reflection methods occur", e);
         } catch (IOException ioe) {
-            errorLogger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+            logger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
         } catch (ParserConfigurationException pe) {
-            errorLogger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
+            logger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
         } catch (SAXException saxe) {
-            errorLogger.error("Error with parser occur", saxe);
+            logger.error("Error with parser occur", saxe);
         }
         return list;
     }

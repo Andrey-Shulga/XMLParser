@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class JaxbXmlCreator {
 
-    private static Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private static Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+
+    private static Logger logger = LoggerFactory.getLogger("JaxbXmlCreator");
 
     public static void createDocument(List<?> list, String fileName) {
 
@@ -25,15 +25,15 @@ public class JaxbXmlCreator {
         Class<?> entityClass = Tariff.class;
         JAXBContext context;
         try {
-            infoLogger.info("Trying to create XML document model from entity by JAXB...");
+            logger.debug("Trying to create XML document model from entity by JAXB...");
             context = JAXBContext.newInstance(entityClass);
             Marshaller m = context.createMarshaller();
             m.marshal(list.get(0), new FileOutputStream(fileName));
-            infoLogger.info("Creating succeed! Written to file {}", fileName);
+            logger.debug("Creating succeed! Written to file {}", fileName);
         } catch (FileNotFoundException e) {
-            errorLogger.error("File {} no found", fileName, e);
+            logger.error("File {} no found", fileName, e);
         } catch (JAXBException e) {
-            errorLogger.error("JAXB error occur!", e);
+            logger.error("JAXB error occur!", e);
         }
     }
 }

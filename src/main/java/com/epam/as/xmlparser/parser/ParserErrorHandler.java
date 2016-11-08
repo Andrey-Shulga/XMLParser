@@ -10,7 +10,7 @@ import org.xml.sax.SAXParseException;
  * Error handler for parser.
  */
 class ParserErrorHandler implements ErrorHandler {
-    private Logger errLogger = LoggerFactory.getLogger("errorLogger");
+    private Logger logger = LoggerFactory.getLogger("ParserErrorHandler");
 
     ParserErrorHandler() {
     }
@@ -29,19 +29,19 @@ class ParserErrorHandler implements ErrorHandler {
     }
 
     public void warning(SAXParseException spe) throws SAXException {
-        errLogger.error("Warning: " + getParseExceptionInfo(spe));
+        logger.error("Warning: " + getParseExceptionInfo(spe));
     }
 
     public void error(SAXParseException spe) throws SAXException {
         String message = "Error: " + getParseExceptionInfo(spe);
-        errLogger.error(message);
+        logger.error(message);
         throw new SAXException(message);
 
     }
 
     public void fatalError(SAXParseException spe) throws SAXException {
         String message = "Fatal Error: " + getParseExceptionInfo(spe);
-        errLogger.error(message);
+        logger.error(message);
         throw new SAXException(message);
     }
 }

@@ -19,26 +19,26 @@ import java.util.List;
  */
 public class JDomXmlCreator {
 
-    private static Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private static Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+
+    private static Logger logger = LoggerFactory.getLogger("JDomXmlCreator");
 
     public static void saveDocToXml(String fileName, Document document) {
 
         XMLOutputter out = new XMLOutputter();
         out.setFormat(Format.getPrettyFormat());
         try {
-            infoLogger.info("Trying to write XML document to file: {}", fileName);
+            logger.debug("Trying to write XML document to file: {}", fileName);
             out.output(document, new FileOutputStream(fileName));
-            infoLogger.info("Writing XML to file {} succeed.", fileName);
+            logger.debug("Writing XML to file {} succeed.", fileName);
         } catch (IOException e) {
-            errorLogger.error("Error when trying to write XML to file: {}", fileName, e);
+            logger.error("Error when trying to write XML to file: {}", fileName, e);
         }
 
 
     }
 
     public static Document createDocument(List<?> list) {
-        infoLogger.info("Trying to create XML document model from entity by JDOM...");
+        logger.debug("Trying to create XML document model from entity by JDOM...");
         Element root = new Element("mobilecompany");
         Element tariffs = new Element("tariffs");
         root.addContent(tariffs);
@@ -55,7 +55,7 @@ public class JDomXmlCreator {
             tariffElement.addContent(getPropertyElement("includedTraffic", "integer", tariff.getIncludedTraffic()));
             tariffs.addContent(tariffElement);
         }
-        infoLogger.info("Creating XML document model succeed.");
+        logger.debug("Creating XML document model succeed.");
         return new Document(root);
     }
 

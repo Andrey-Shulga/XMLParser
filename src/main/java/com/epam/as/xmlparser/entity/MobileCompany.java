@@ -3,11 +3,11 @@ package com.epam.as.xmlparser.entity;
 import java.util.Map;
 
 /**
- * Create aggregate Mobile company.
+ * Aggregator - Mobile company.
  */
 public class MobileCompany {
     private String name;
-    private Map<Tariff, Integer> tariffMap;
+    private Map<Tariff, Integer> tariffs;
     private int RANDOM_RANGE = 1500000;
 
 
@@ -18,11 +18,11 @@ public class MobileCompany {
      * Constructs new Mobile Company
      *
      * @param name      the name of Mobile Company
-     * @param tariffMap the list of tariffs for Mobile Company
+     * @param tariffs the list of tariffs for Mobile Company
      */
-    public MobileCompany(String name, Map<Tariff, Integer> tariffMap) {
+    public MobileCompany(String name, Map<Tariff, Integer> tariffs) {
         this.name = name;
-        this.tariffMap = tariffMap;
+        this.tariffs = tariffs;
     }
 
     public String getName() {
@@ -33,12 +33,12 @@ public class MobileCompany {
         this.name = name;
     }
 
-    public Map<Tariff, Integer> getTariffMap() {
-        return tariffMap;
+    public Map<Tariff, Integer> getTariffs() {
+        return tariffs;
     }
 
-    public void setTariffMap(Map<Tariff, Integer> tariffMap) {
-        this.tariffMap = tariffMap;
+    public void setTariffs(Map<Tariff, Integer> tariffs) {
+        this.tariffs = tariffs;
     }
 
     /**

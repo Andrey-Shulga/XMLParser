@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tariffs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="tariff.xsd">
+         xsi:noNamespaceSchemaLocation="tariffs.xsd">
 
     <tariff>
         <property>

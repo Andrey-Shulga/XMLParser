@@ -29,14 +29,14 @@ import java.util.List;
  */
 public class SaxXmlEntityParser implements XmlEntityParser {
 
-    private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+
+    private Logger logger = LoggerFactory.getLogger("SaxXmlEntityParser");
 
     @Override
     public List<?> parse(InputStream in, Class<?> entityClass) {
 
         List<Object> list = new ArrayList<>();
-        String XsdFileName = "xsdtypes.xsd";
+        String XsdFileName = "mobilecompanytypes.xsd";
 
         DefaultHandler handler = new DefaultHandler() {
             private Object obj;
@@ -47,16 +47,16 @@ public class SaxXmlEntityParser implements XmlEntityParser {
 
             @Override
             public void startDocument() throws SAXException {
-                infoLogger.info("Start parsing XML by SAX, use for validation XSD file: {}", XsdFileName);
-                infoLogger.info("Try to find entities: {}", entityClass);
+                logger.debug("Start parsing XML by SAX, use for validation XSD file: {}", XsdFileName);
+                logger.debug("Try to find entities: {}", entityClass);
             }
 
             @Override
             public void endDocument() throws SAXException {
-                infoLogger.info("Parsing end. Entities found: {}", list.size());
-                infoLogger.info("Print results:");
+                logger.debug("Parsing end. Entities found: {}", list.size());
+                logger.debug("Print results:");
                 for (Object o : list)
-                    System.out.println(o);
+                    logger.debug(o.toString());
             }
 
             @Override
@@ -66,7 +66,7 @@ public class SaxXmlEntityParser implements XmlEntityParser {
                         try {
                             obj = entityClass.newInstance();
                         } catch (InstantiationException | IllegalAccessException e1) {
-                            errorLogger.error("Error occurs with newInstance() method for class {}", entityClass, e1);
+                            logger.error("Error occurs with newInstance() method for class {}", entityClass, e1);
                         }
                         break;
                     case "name":
@@ -102,7 +102,7 @@ public class SaxXmlEntityParser implements XmlEntityParser {
                                 }
                             }
                         } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
-                            errorLogger.error("Errors with reflexion occur!", e);
+                            logger.error("Errors with reflexion occur!", e);
                         }
                         break;
 
@@ -132,11 +132,11 @@ public class SaxXmlEntityParser implements XmlEntityParser {
             SAXParser parser = factory.newSAXParser();
             parser.parse(in, handler);
         } catch (IOException ioe) {
-            errorLogger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
+            logger.error("Validation XSD file: \"{}\" not found!", XsdFileName, ioe);
         } catch (ParserConfigurationException pe) {
-            errorLogger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
+            logger.error("DocumentBuilder cannot be created which satisfies the configuration requested", pe);
         } catch (SAXException saxe) {
-            errorLogger.error("Error with parser occur", saxe);
+            logger.error("Error with parser occur", saxe);
         }
 
         return list;

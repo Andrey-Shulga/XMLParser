@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class StaxXmlEntityParser implements XmlEntityParser {
 
-    private Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+
+    private Logger logger = LoggerFactory.getLogger("StaxXmlEntityParser");
 
     @Override
     public List<?> parse(InputStream in, Class<?> entityClass) {
@@ -39,20 +39,20 @@ public class StaxXmlEntityParser implements XmlEntityParser {
             parser = factory.createXMLStreamReader(in);
 
         } catch (XMLStreamException e) {
-            errorLogger.error("Error with XMLStreamReader occur!", e);
+            logger.error("Error with XMLStreamReader occur!", e);
         }
-        infoLogger.info("Start parsing XML by StAX.");
-        infoLogger.info("Try to find entities: {}", entityClass);
+        logger.debug("Start parsing XML by StAX.");
+        logger.debug("Try to find entities: {}", entityClass);
         try {
             while (parser.hasNext()) {
                 int event = parser.next();
 
                 switch (event) {
                     case XMLStreamConstants.END_DOCUMENT:
-                        infoLogger.info("Parsing end. Entities found: {}", list.size());
-                        infoLogger.info("Print results:");
+                        logger.debug("Parsing end. Entities found: {}", list.size());
+                        logger.debug("Print results:");
                         for (Object o : list)
-                            System.out.println(o);
+                            logger.debug(o.toString());
                         break;
 
                     case XMLStreamConstants.START_ELEMENT:
@@ -100,7 +100,7 @@ public class StaxXmlEntityParser implements XmlEntityParser {
                                         }
                                     }
                                 } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
-                                    errorLogger.error("Errors with reflexion occur!", e);
+                                    logger.error("Errors with reflexion occur!", e);
                                 }
                                 break;
 
@@ -112,9 +112,9 @@ public class StaxXmlEntityParser implements XmlEntityParser {
                 }
             }
         } catch (InstantiationException | IllegalAccessException e) {
-            errorLogger.error("Error with Class {} method newInstance() occur!", entityClass, e);
+            logger.error("Error with Class {} method newInstance() occur!", entityClass, e);
         } catch (XMLStreamException e) {
-            errorLogger.error("Error with method hasNext() or next() occur!", e);
+            logger.error("Error with method hasNext() or next() occur!", e);
         }
         return list;
     }

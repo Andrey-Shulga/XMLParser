@@ -24,7 +24,7 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) {
 
-        Logger errLogger = LoggerFactory.getLogger("errorLogger");
+        Logger logger = LoggerFactory.getLogger("Runner");
 
         String XmlFileName = "mobilecompany.xml";
         Class<?> entityClass = Tariff.class;
@@ -36,7 +36,7 @@ public class Runner {
             entityList = (List<Object>) domParser.parse(in, entityClass);
             entityList.clear();
         } catch (IOException e) {
-            errLogger.error("File: \"{}\" not found!", XmlFileName, e);
+            logger.error("File: \"{}\" not found!", XmlFileName, e);
         }
 
         //Test parsing by Sax
@@ -45,7 +45,7 @@ public class Runner {
             entityList = (List<Object>) saxParser.parse(in, entityClass);
             entityList.clear();
         } catch (IOException e) {
-            errLogger.error("File: \"{}\" not found!", XmlFileName, e);
+            logger.error("File: \"{}\" not found!", XmlFileName, e);
         }
 
         //Test parsing by Stax
@@ -54,7 +54,7 @@ public class Runner {
             entityList = (List<Object>) staxParser.parse(in, entityClass);
 
         } catch (IOException e) {
-            errLogger.error("File: \"{}\" not found!", XmlFileName, e);
+            logger.error("File: \"{}\" not found!", XmlFileName, e);
         }
 
         //Create XML document from entity by JDOM and write to file.
